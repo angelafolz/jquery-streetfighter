@@ -65,3 +65,7 @@ body {
     left: 950px;
 }
 
+.burning {
+	background: url(http://i37.photobucket.com/albums/e55/vampjulian/fuego08.gif) repeat-x -10px 7px;
+	padding-right: 40px;
+}

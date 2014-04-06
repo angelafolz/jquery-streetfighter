@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	var xkeyisdown = false;
 	var mouseisover = false;
 
@@ -27,6 +28,17 @@ $(document).ready(function(){
 				$(this).hide();
 				$(this).css({"left": "-210px"});
 			});
+		
+		/* makes hadouken burn text */
+		var p_burn = $(".instructions p:first-child");
+		if(!p_burn.hasClass("burning")){
+			setTimeout(function(){
+				p_burn.addClass("burning");
+				setTimeout(function(){		// why doesn't chaining .delay(1700).removeClass("burning") inside the first setTimeout function work?
+					p_burn.removeClass("burning");
+				}, 2000);
+			}, 300);
+		}
 	})
 	.mouseup(function(){
 		$(".ryu-throwing").hide();
