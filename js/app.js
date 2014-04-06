@@ -1,15 +1,24 @@
 $(document).ready(function(){
+	var xkeyisdown = false;
+	var mouseisover = false;
+
 	$(".ryu").mouseenter(function(){
-		$(".ryu-still").hide();
-		$(".ryu-ready").show();
+		mouseisover = true;
+		if(!xkeyisdown){			// so doesn't flicker if move mouse while holding x
+			$(".ryu-still").hide();
+			$(".ryu-ready").show();
+		}
 	})
 	.mouseleave(function(){
-		$(".ryu-ready").hide();
-		$(".ryu-still").show();
+		mouseisover = false;
+		if(!xkeyisdown){			// so doesn't flicker if move mouse while holding x
+			$(".ryu-ready").hide();
+			$(".ryu-still").show();
+		}
 	})
 	.mousedown(function(){
 		playHadouken();
-		$(".ryu-ready, .ryu-still, .ryu-cool").hide();
+		$(".ryu-ready, .ryu-cool").hide();
 		$(".ryu-throwing").show();
 		$(".hadouken").finish().show()
 		.animate({"left": "300px"},
@@ -21,18 +30,30 @@ $(document).ready(function(){
 	})
 	.mouseup(function(){
 		$(".ryu-throwing").hide();
-		$(".ryu-still").show();
+		if(xkeyisdown){
+			$(".ryu-cool").show();
+		}
+		else {
+			$(".ryu-ready").show();
+		}
 	});
 	$(document).keydown(function(event){
 		if(event.which == 88){
-			$(".ryu-still, .ryu-ready").hide();
+			xkeyisdown = true;
+			$(".ryu-still, .ryu-ready, .ryu-throwing").hide();
 			$(".ryu-cool").show();
 		}
 	});
 	$(document).keyup(function(event){
-		if(event.which == 88){ // in case another key is pressed and released while holding x
+		if(event.which == 88){			// in case another key is pressed and released while holding x
+			xkeyisdown = false;
 			$(".ryu-cool").hide();
-			$(".ryu-still").show();
+			if(mouseisover){
+				$(".ryu-ready").show();
+			}
+			else {
+				$(".ryu-still").show();
+			}
 		}
 	});
 });
