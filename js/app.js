@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	var xkeyisdown = false;
 	var mouseisover = false;
+	var mouseisdown = false;
 
 	$(".ryu").mouseenter(function(){
 		mouseisover = true;
@@ -18,6 +19,7 @@ $(document).ready(function(){
 		}
 	})
 	.mousedown(function(){
+		mouseisdown = true;
 		playHadouken();
 		$(".ryu-ready, .ryu-cool").hide();
 		$(".ryu-throwing").show();
@@ -27,8 +29,9 @@ $(document).ready(function(){
 			function(){
 				$(this).hide();
 				$(this).css({"left": "-210px"});
+				mouseisdown = false;
 			});
-		
+
 		/* makes hadouken burn text */
 		var p_burn = $(".instructions p:first-child");
 		if(!p_burn.hasClass("burning")){
@@ -50,7 +53,7 @@ $(document).ready(function(){
 		}
 	});
 	$(document).keydown(function(event){
-		if(event.which == 88){
+		if(event.which == 88 && !mouseisdown){
 			xkeyisdown = true;
 			$(".ryu-still, .ryu-ready, .ryu-throwing").hide();
 			$(".ryu-cool").show();
